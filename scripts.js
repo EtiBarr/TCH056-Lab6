@@ -158,35 +158,54 @@ function afficherGrille(grille) {
         cell.addEventListener('click', function () {
             const ligne = $(this).data('ligne');
             const colonne = $(this).data('colonne');
+            const zoneDiffusion = obtenirCoordonneesZoneDiffusion(grille, ligne, colonne);
             alert(grille[i][j]);
-        });
+
+            if (zoneDiffusion === null) {
+                alert('Game over! You clicked on a bomb.');
+            } else {
+                updateView(zoneDiffusion);
+            }
+
+            alert(grille[i][j]);
+   
+});
   
         gameContainer.appendChild(cell);
       }
     }
   }
 
+  function updateView(zoneDiffusion) {
+    for (const [i, j] of zoneDiffusion) {
+        const cell = document.querySelector(`[data-ligne="${i}"][data-colonne="${j}"]`);
+        cell.style.backgroundColor = "white";
+    }
+}
+
+
 function obtenirCoordonneesZoneDiffusion(grille) {
     for (let i = 0; i < grille.length; i++) {
         for (let j = 0; j < grille[0].length; j++) {
-            let valeurCellule = grille[i][j];
 
             if(grille[i][j] === bombe){
                 return null;
-            }else if(grille[i][j] != bombe){
+
+            }else if(grille[i][j] !== 0){
                 return [[i,j]];
+
             }else{
                 candidatA = [[i, j]];
             }
             retenuesB = [...candidatA];
             borduresC = [];
             
-            while(candidatA.length != 0){
+            while(candidatA.length > 0){
                 let candidatCourant = candidatA.pop();
-                if(valeurCellule === 0 && !estVoisinDejaPresent(retenuesB,[i,j])){
+                if(candidatCourant === 0 && !estVoisinDejaPresent(candidatA,[i,j])){
+                    candidatA.push([i,j]);
+                }else if(candidatCourant != 0 && candidatCourant != bombe && !estVoisinDejaPresent(borduresC, [i,j])){
                     retenuesB.push([i,j]);
-                }else if(valeurCellule != 0 && valeurCellule != bombe && !estVoisinDejaPresent(borduresC, [i,j])){
-                    borduresC.push([i,j]);
                 }
             }
                 return retenuesB.concat(borduresC);
@@ -205,3 +224,7 @@ function estVoisinDejaPresent(listeCoordonnees, voisin){
     }
 
 }
+const maGille = [[1, 0, 0], [2, 3, 4], [5, 6, 7]];
+let res = obtenirCoordonneesZoneDiffusion(grille, 0, 2);
+console.log(res);
+

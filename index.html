@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="scripts.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+  <title>Minesweeper Game</title>
 </head>
 <body>
-    
+
+    <h1>Minesweeper </h1>
+
+  <div id="btn-setup">
+    <button  onclick="genererGrille(5, 5)">Facile</button>
+    <button  onclick="genererGrille(10, 10)">Moyen</button>
+    <button  onclick="genererGrille(20, 20)">Difficile</button>
+  </div>
+  <div id="mine-box"></div>
+  <script src="script.js"></script>
 </body>
 </html>

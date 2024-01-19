@@ -96,7 +96,10 @@ function remplirGrille(grille){
 }
 
 
+
  
+
+
 function afficherGrille(grille) {
     
     const gameContainer = document.getElementById('mine-box');
@@ -107,6 +110,8 @@ function afficherGrille(grille) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
         let valeurCellule = grille[i][j];
+
+
         switch(valeurCellule) {
             case 0:
                 cell.style.color = "lightgray";
@@ -137,9 +142,23 @@ function afficherGrille(grille) {
                 break;
         }
 
+        //remove this so we don't show the value
+        //cell.textContent = grille[i][j];
 
-        cell.textContent = grille[i][j];
+
+
+        // Code pour gérer le clic
+        cell.addEventListener('click', function () {
+            const ligne = $(this).data('ligne');
+                const colonne = $(this).data('colonne');
+            alert(grille[i][j]);
+        });
+  
         gameContainer.appendChild(cell);
+
+
       }
     }
   }
+
+ 

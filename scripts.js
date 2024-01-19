@@ -60,44 +60,47 @@ function ajouterBombes(grille, difficulte) {
 }
 
 
-function remplirGrille(grille){
-    let nbLignes = grille.length;
-    let nbColonnes = grille[0].length;
+function remplirGrille(grille) {
+    const nbLignes = grille.length;
+    const nbColonnes = grille[0].length;
 
-    //parcourir grille
-    for(let i =0; i < nbLignes; i++){
-        for(let j = 0; j < nbColonnes; j++){
-            
-         let compteurBombes = 0;
-            if(grille[i][j] !== bombe){ //si la cellule ne contient pas de bombe
-                //compter le nombre de bombes
-                for(let k= -1; k<= 1; k++){ //parcours les lignes voisines -1 0 +1
-                    for(let l= -1; l<= 1; l++){ //parcours les colonnes voisines -1 0 +1
-                        let ni = i + k //pour avancer ou reculer les lignes
-                        let nj = j + l //pour avancer ou reculer les colonnes
-                    
-                        if(ni >=0 && ni < nbLignes && nj >= 0 && nj < nbColonnes){ //verifier que les cellules ne depassent pas la grille
-                            if(grille[ni][nj] === bombe){ //si les cellules voisines seulement ont une bombe
-                                compteurBombes++;
-                            }
-                        }
-
-                    }
-                
-
-                grille[i][j]= compteurBombes;
-                }
+    for (let i = 0; i < nbLignes; i++) {
+        for (let j = 0; j < nbColonnes; j++) {
+            if (grille[i][j] !== bombe) {
+                const compteurBombes = compterBombesVoisines(i, j, grille, nbLignes, nbColonnes);
+                grille[i][j] = compteurBombes;
             }
-            
         }
-
     }
     afficherGrille(grille);
 }
 
 
-
+function obtenirVoisins(i, j, nbLignes, nbColonnes) {
+    const voisins = [];
+    for (let k = -1; k <= 1; k++) {
+        for (let l = -1; l <= 1; l++) {
+            const ni = i + k;
+            const nj = j + l;
+            if (ni >= 0 && ni < nbLignes && nj >= 0 && nj < nbColonnes) {
+                voisins.push([ni, nj]);
+            }
+        }
+    }
+    return voisins;
+}
  
+function compterBombesVoisines(i, j, grille, nbLignes, nbColonnes) {
+    let compteurBombes = 0;
+    const voisins = obtenirVoisins(i, j, nbLignes, nbColonnes);
+
+    for (const [ni, nj] of voisins) {
+        if (grille[ni][nj] === bombe) {
+            compteurBombes++;
+        }
+    }
+    return compteurBombes;
+}
 
 
 function afficherGrille(grille) {

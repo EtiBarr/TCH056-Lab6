@@ -11,11 +11,11 @@ function genererGrille(nbLignes, nbColonnes) {
 
     if (tailleGrille === 25) {
         difficulte = 'facile';
-      } else if (tailleGrille === 100) {
+    } else if (tailleGrille === 100) {
         difficulte = 'moyen';
-      } else if (tailleGrille === 400) {
+    } else if (tailleGrille === 400) {
         difficulte = 'difficile';
-      }
+    }
 
   $('html').css('--gridWidth', gridWidth);
 
@@ -67,35 +67,11 @@ function remplirGrille(grille) {
     const nbLignes = grille.length;
     const nbColonnes = grille[0].length;
 
-<<<<<<< Updated upstream
     for (let i = 0; i < nbLignes; i++) {
         for (let j = 0; j < nbColonnes; j++) {
             if (grille[i][j] !== bombe) {
                 const compteurBombes = compterBombesVoisines(i, j, grille, nbLignes, nbColonnes);
                 grille[i][j] = compteurBombes;
-=======
-    //parcourir grille
-    for(let i =0; i < nbLignes; i++){
-        for(let j = 0; j < nbColonnes; j++){
-            
-         let compteurBombes = 0;
-            if(grille[i][j] !== bombe){ //si la cellule ne contient pas de bombe
-                //compter le nombre de bombes
-                for(let k= -1; k<= 1; k++){ //parcours les lignes voisines -1 0 +1
-                    for(let l= -1; l<= 1; l++){ //parcours les colonnes voisines -1 0 +1
-                        let ni = i + k //pour avancer ou reculer les lignes
-                        let nj = j + l //pour avancer ou reculer les colonnes
-                    
-                        if(ni >=0 && ni < nbLignes && nj >= 0 && nj < nbColonnes){ //verifier que les cellules ne depassent pas la grille
-                            if(grille[ni][nj] === bombe){ //si les cellules voisines seulement ont une bombe
-                                compteurBombes++;
-                            }
-                        }
-
-                    }
-                grille[i][j]= compteurBombes; //afficher le nombre de bombes de chaque grille
-                }
->>>>>>> Stashed changes
             }
         }
     }
@@ -103,7 +79,6 @@ function remplirGrille(grille) {
 }
 
 
-<<<<<<< Updated upstream
 function obtenirVoisins(i, j, nbLignes, nbColonnes) {
     const voisins = [];
     for (let k = -1; k <= 1; k++) {
@@ -131,14 +106,12 @@ function compterBombesVoisines(i, j, grille, nbLignes, nbColonnes) {
 }
 
 
-=======
->>>>>>> Stashed changes
 function afficherGrille(grille) {
     
     const gameContainer = document.getElementById('mine-box');
     gameContainer.innerHTML = ''; 
   
-    for (let i = 0; i <= grille.length; i++) {
+    for (let i = 0; i < grille.length; i++) {
       for (let j = 0; j < grille[i].length; j++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
@@ -194,57 +167,39 @@ function afficherGrille(grille) {
     }
   }
 
-obtenirCoordonneesZoneDiffusion(grille) {
-    //mise a jour du contenant
-    const gameContainer = document.getElementById('mine-box');
-    gameContainer.innerHTML = ''; 
-  
-    //definir le nombre de lignes et le nombre de colonnes
-    let nbLignes = grille.length;
-    let nbColonnes = grille[i].length;
-
-    for (let i = 0; i <= nbLignes; i++) {
-        for (let j = 0; j < nbColonnes; j++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
+function obtenirCoordonneesZoneDiffusion(grille) {
+    for (let i = 0; i < grille.length; i++) {
+        for (let j = 0; j < grille[0].length; j++) {
             let valeurCellule = grille[i][j];
 
-            cell.addEventListener('click', function(){
-            const ligne = $(this).data('ligne');
-            const colonne = $(this).data('colonne');
-
-            if(grille[ligne][colonne] === bombe){
+            if(grille[i][j] === bombe){
                 return null;
-            }else if(grille[ligne][colonne] != bombe){
-                let liste = [];
-                liste = [ligne, colonne];
-                return [liste];
+            }else if(grille[i][j] != bombe){
+                return [[i,j]];
             }else{
-                candidatA = [];
-                candidatA.push(liste);
+                candidatA = [[i, j]];
             }
-            retenuesB = [...A];
+            retenuesB = [...candidatA];
             borduresC = [];
             
             while(candidatA.length != 0){
-                candidatA.pop(grille[ligne][colonne]);
-                if(valeurCellule=0 && !estVoisinDejaPresent(retenuesB, grille[ligne][colonne])){
-                    retenuesB.push(grille[ligne][colonne]);
-                }else if(valeurCellule != 0 && valeurCellule != bombe && !estVoisinDejaPresent(borduresC, grille[ligne][colonne])){
-                    borduresC.push(grille[ligne][colonne]);
+                let candidatCourant = candidatA.pop();
+                if(valeurCellule === 0 && !estVoisinDejaPresent(retenuesB,[i,j])){
+                    retenuesB.push([i,j]);
+                }else if(valeurCellule != 0 && valeurCellule != bombe && !estVoisinDejaPresent(borduresC, [i,j])){
+                    borduresC.push([i,j]);
                 }
             }
                 return retenuesB.concat(borduresC);
-            })
+            }
         }
     }
-    gameContainer.appendChild(cell);
-}
+
 
 function estVoisinDejaPresent(listeCoordonnees, voisin){
     //parcourir la liste de coordonnes
     for(let i= 0; i< listeCoordonnees.length; i++){
-        if(listeCoordonnees[i][0] === voisin [0] && listeCoordonnees[i][1] === voisin [1]){
+        if(listeCoordonnees[i][0] === voisin[0] && listeCoordonnees[i][1] === voisin[1]){
             return true;
         }
         return false;

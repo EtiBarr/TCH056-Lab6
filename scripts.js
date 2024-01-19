@@ -166,26 +166,9 @@ function afficherGrille(grille) {
     }
   }
 
-<<<<<<< Updated upstream
 function obtenirCoordonneesZoneDiffusion(grille) {
     for (let i = 0; i < grille.length; i++) {
         for (let j = 0; j < grille[0].length; j++) {
-=======
-
-function obtenirCoordonneesZoneDiffusion(grille){
-    //mise a jour du contenant
-    const gameContainer = document.getElementById('mine-box');
-    gameContainer.innerHTML = ''; 
-  
-    //definir le nombre de lignes et le nombre de colonnes
-    let nbLignes = grille.length;
-    let nbColonnes = grille[i].length;
-
-    for (let i = 0; i <= nbLignes; i++) {
-        for (let j = 0; j < nbColonnes; j++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
->>>>>>> Stashed changes
             let valeurCellule = grille[i][j];
 
             if(grille[i][j] === bombe){
